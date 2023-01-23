@@ -1,8 +1,6 @@
 ####################################################################
 # Makefile for running uC/OS on Linux Ubuntu 
 #
-# By lencioni@ita.br
-#
 # NOTES: 
 #  1) originaly a port for uC/OS-III to run on Linux Ubuntu
 #  2) it does not run on MacOS! (I used just to check the makefile)
@@ -93,6 +91,7 @@ POSIX_OS-III:	$(OBJ)
 
 # Other Targets
 clean:
+	find ~/Repository/uC-OS-III-ports -type f -name '*.o' -delete
 	rm -rf *.exe *.o *.out POSIX_OS-III
 
 .PHONY: all clean
