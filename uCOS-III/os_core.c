@@ -30,10 +30,6 @@
 const  CPU_CHAR  *os_core__c = "$Id: $";
 #endif
 
-#ifdef LRL_MSC_CHANGES
-#include "includes.h"
-#endif
-
 /*
 ************************************************************************************************************************
 *                                                    INITIALIZATION
@@ -49,14 +45,8 @@ const  CPU_CHAR  *os_core__c = "$Id: $";
 ************************************************************************************************************************
 */
 
-#ifdef LRL_MSC_CHANGES
-void  OSInit (int posix_sch_type, OS_ERR  *p_err)
-{
-	OS_ERR temp;
-#else
 void  OSInit (OS_ERR  *p_err)
 {
-#endif
 #if (OS_CFG_ISR_STK_SIZE > 0u)
     CPU_STK      *p_stk;
     CPU_STK_SIZE  size;
@@ -98,18 +88,6 @@ void  OSInit (OS_ERR  *p_err)
 #if (OS_CFG_SCHED_ROUND_ROBIN_EN > 0u)
     OSSchedRoundRobinEn             = OS_FALSE;
     OSSchedRoundRobinDfltTimeQuanta = OSCfg_TickRate_Hz / 10u;
-
-	#ifdef LRL_MSC_CHANGES
-		if(posix_sch_type == MSC_SCHED_RR)
-		{
-			PRINT("\n\nRound-Robin init ...\n");
-
-			/* Enable round-robing and configure it */
-			OSSchedRoundRobinCfg (OS_TRUE,
-								  OSSchedRoundRobinDfltTimeQuanta,
-								  &temp);
-		}
-	#endif
 #endif
 
 #if (OS_CFG_ISR_STK_SIZE > 0u)

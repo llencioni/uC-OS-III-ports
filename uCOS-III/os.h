@@ -1893,11 +1893,7 @@ void       OS_TLS_TaskSw      (void);
 /*                                                    MISCELLANEOUS                                                   */
 /* ================================================================================================================== */
 
-#ifdef LRL_MSC_CHANGES
-void		  OSInit (int posix_sch_type, OS_ERR  *p_err);
-#else
 void          OSInit                    (OS_ERR                *p_err);
-#endif
 
 void          OSIntEnter                (void);
 void          OSIntExit                 (void);

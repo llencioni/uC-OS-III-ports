@@ -29,7 +29,7 @@
 
 
 /* MSC changes for an application-specific RTOS */
-#define LRL_MSC_CHANGES
+//#define LRL_MSC_CHANGES
                                                                 /* --------------------------- MISCELLANEOUS --------------------------- */
 // LRL
 //#define OS_CFG_APP_HOOKS_EN                        1u           /* Enable (1) or Disable (0) application specific hooks                  */

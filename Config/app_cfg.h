@@ -61,7 +61,7 @@
 #define UCOS_III_REGULAR_API		0
 #define POSIX_API					1
 
-#define API_TYPE 					POSIX_API
+#define API_TYPE 					UCOS_III_REGULAR_API
 
 
 /*
