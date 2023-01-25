@@ -42,8 +42,6 @@ $(C_PATH)/uC-LIB/lib_str.c \
 $(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_c.c \
 $(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_core.c \
 $(C_PATH)/App/app.c \
-$(C_PATH)/App/api-wrapper.c \
-$(C_PATH)/App/posix-pthread.c \
 $(C_PATH)/Ports/GCC-Ubuntu/os_app_hooks.c
 
 # Header files directories
