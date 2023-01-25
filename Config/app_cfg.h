@@ -56,14 +56,6 @@
 #define HW_TYPE 					HW_VIRTUAL_LINUX
 
 
-/* Application-software interface definition */
-
-#define UCOS_III_REGULAR_API		0
-#define POSIX_API					1
-
-#define API_TYPE 					UCOS_III_REGULAR_API
-
-
 /*
 *********************************************************************************************************
 *                                                INCLUDE
@@ -77,8 +69,8 @@
 *********************************************************************************************************
 */
 
-#define  APP_CFG_TASK_1_PRIO                              33
-#define  APP_CFG_TASK_2_PRIO                              33
+#define  APP_CFG_TASK_1_PRIO			33
+#define  APP_CFG_TASK_2_PRIO			10
 
 // LRL
 //#define  OS_TASK_TMR_PRIO                       (OS_LOWEST_PRIO - 2)

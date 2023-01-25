@@ -42,17 +42,6 @@
 *********************************************************************************************************
 */
 
-#if(API_TYPE == POSIX_API)
-static msc_pthread_attr_t	Task1_attr;
-static msc_pthread_t		Task1ID;
-
-#if(HW_TYPE == HW_VIRTUAL_LINUX)
-static msc_pthread_attr_t	Task2_attr;
-static msc_pthread_t		Task2ID;
-#endif /* HW_VIRTUAL_LINUX */
-
-#else /* POSIX_API */
-
 static OS_TCB        	App_Task1TCB;
 static CPU_STK_SIZE		App_Task1Stk[APP_CFG_DEFAULT_TASK_STK_SIZE];
 
@@ -60,8 +49,6 @@ static CPU_STK_SIZE		App_Task1Stk[APP_CFG_DEFAULT_TASK_STK_SIZE];
 static  OS_TCB        	App_Task2TCB;
 static  CPU_STK_SIZE  	App_Task2Stk[APP_CFG_DEFAULT_TASK_STK_SIZE];
 #endif /* HW_VIRTUAL_LINUX */
-
-#endif /* POSIX_API */
 
 /*
 *********************************************************************************************************
@@ -95,13 +82,7 @@ static void App_Task2 (void * p_arg);
 
 int  main (void)
 {
-#if(API_TYPE == POSIX_API)
-    int rc1 = 0;
-    struct msc_sched_param priority;
-    const char *thread1_message = "App 1st Task";
-#else
     OS_ERR  err;
-#endif
 
 #if(HW_TYPE == HW_EMBEDDED_LPC2129)
 	BSP_Init();                             /* Initialize BSP functions */
@@ -110,36 +91,6 @@ int  main (void)
 #else
 	PRINT("\nuC/OS-III running on Ubuntu ...\n");
 #endif
-
-#if(API_TYPE == POSIX_API)
-
-	PRINT("\nPOSIX API ...\n");
-
-		/* Initialize Thread 'attr' params to default values */
-	rc1 = msc_pthread_attr_init(&Task1_attr);
-
-	/* Set scheduling policy */
-	rc1 |= msc_pthread_attr_setschedpolicy(&Task1_attr, MSC_SCHED_RR);
-
-	/* Set task priority */
-	priority.sched_priority = (int) APP_CFG_TASK_1_PRIO;
-	rc1 |= msc_pthread_attr_setschedparam(&Task1_attr, &priority);
-
-	/* Create thread */
-	rc1 |= msc_pthread_create (&Task1ID,
-							   &Task1_attr,
-							   (void*)&App_Task1,
-							   (void*)thread1_message);
-
-	if(rc1 != MSC_PTHREAD_ERR_NONE)
-	{
-		PRINT("\nErro Pthreads init!!!!");
-		while(1);
-	}
-
-#else
-
-	PRINT("\nRegular uC/OS-III API ...\n");
 
 	/* Initialize uC/OS-III */
 	PRINT("\nOsInit ...");
@@ -153,7 +104,7 @@ int  main (void)
 	}
 	else
 	{
-		PRINT("\nOsInit gone ...");
+		PRINT("\n\nOsInit gone ...");
 	}
 
 	/* Create the start task */
@@ -172,7 +123,7 @@ int  main (void)
                  (OS_ERR     *)&err);
 
 	/* Start multitasking (i.e. give control to uC/OS-III) */
-	PRINT("\nOSStart ...\n");
+	PRINT("\n\nOSStart ...");
 	OSStart(&err);
 
 	/* Code should never get here */
@@ -180,8 +131,6 @@ int  main (void)
 		PRINT("\nErro Task 1 !!!!");
 	else
 		PRINT("\nShould never get here!!\n\n");
-
-#endif
 
 	while(1){
     };
@@ -223,6 +172,7 @@ void App_Task1 (void *p_arg)
 
     /* Cria a 2a Task/Thread */
     App_StartTask2();
+	PRINT("\n");
 #else
 	PRINT("\nTask 1 init!");
 #endif
@@ -231,7 +181,7 @@ void App_Task1 (void *p_arg)
 	{
 			/* Task body, always written as an infinite loop.       */
     	#if(HW_TYPE == HW_VIRTUAL_LINUX)
-    		PRINT("\nuCOS-III Task 1 is running ...");
+    		PRINT("\nuCOS-III Task 1 running ...");
     		OSTimeDlyHMSM(0u, 0u, 1u, 0u, OS_OPT_TIME_HMSM_STRICT, &os_err);
 			if(os_err != OS_ERR_NONE)
 				PRINT("\nErro 1o delay !!!");
@@ -269,38 +219,7 @@ void App_Task1 (void *p_arg)
 #if(HW_TYPE == HW_VIRTUAL_LINUX)
 static void App_StartTask2 (void)
 {
-
-#if(API_TYPE == POSIX_API)
-    int rc2 = 0;
-    struct msc_sched_param priority2;
-    const char *thread2_message = "App 2nd Task";
-#else
     OS_ERR  err;
-#endif
-
-
-#if(API_TYPE == POSIX_API)
-
-	/* Initialize Thread 'attr' params to default values */
-	rc2 = msc_pthread_attr_init(&Task2_attr);
-
-	/* Set task priority */
-	priority2.sched_priority = (int) APP_CFG_TASK_2_PRIO;
-	rc2 |= msc_pthread_attr_setschedparam(&Task2_attr, &priority2);
-
-	/* Create thread */
-	rc2 |= msc_pthread_create(&Task2ID,
-							  &Task2_attr,
-							  (void*)&App_Task2,
-							  (void*)thread2_message);
-
-	if(rc2 != MSC_PTHREAD_ERR_NONE)
-	{
-		PRINT("\nErro Pthreads init!!!!");
-		while(1);
-	}
-
-#else
 
     OSTaskCreate((OS_TCB     *)&App_Task2TCB,
                  (CPU_CHAR   *)"App Task 2",
@@ -315,8 +234,6 @@ static void App_StartTask2 (void)
                  (void       *) 0,
                  (OS_OPT      )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                  (OS_ERR     *)&err);
-
-#endif
 
 }
 

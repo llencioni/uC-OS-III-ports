@@ -237,7 +237,7 @@ void  OSTaskCreateHook (OS_TCB  *p_tcb)
     int                ret;
 
 	/* Debug */
-	printf("\nTask created: %s",p_tcb->NamePtr);
+	printf("\n\nTask created: %s",p_tcb->NamePtr);
 	printf("\nTask priority: %d",p_tcb->Prio);
 
 #if OS_CFG_APP_HOOKS_EN > 0u
