@@ -10,7 +10,7 @@
 # Check if OS is Linux or Mac
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-    C_PATH=/home/luizlencioni/Repository/uC-OS-III-ports
+	C_PATH=./
 endif
 ifeq ($(UNAME_S),Darwin)
     C_PATH=/Users/luizrlencioni/MestradoITA/msc_luiz-lencioni/code/Example-uC-OS-III
@@ -89,7 +89,7 @@ POSIX_OS-III:	$(OBJ)
 
 # Other Targets
 clean:
-	find ~/Repository/uC-OS-III-ports -type f -name '*.o' -delete
+	find -type f -name '*.o' -delete
 	rm -rf *.exe *.o *.out POSIX_OS-III
 
 .PHONY: all clean
