@@ -415,26 +415,6 @@
               <FileType>5</FileType>
               <FilePath>..\..\App\includes.h</FilePath>
             </File>
-            <File>
-              <FileName>posix-pthread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\App\posix-pthread.c</FilePath>
-            </File>
-            <File>
-              <FileName>posix-pthread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\App\posix-pthread.h</FilePath>
-            </File>
-            <File>
-              <FileName>api-wrapper.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\App\api-wrapper.c</FilePath>
-            </File>
-            <File>
-              <FileName>api-wrapper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\App\api-wrapper.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>

@@ -53,7 +53,7 @@
 #define HW_VIRTUAL_LINUX			0		// Virtual HW platform
 #define HW_EMBEDDED_LPC2129			1		// Embedded HW platform
 
-#define HW_TYPE 					HW_VIRTUAL_LINUX
+#define HW_TYPE 					HW_EMBEDDED_LPC2129
 
 
 /*
