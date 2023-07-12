@@ -10,6 +10,7 @@
 */
 
 #include "includes.h"
+#include "posix-pthread.h"
 
 
 /* pthread_attr_init()
