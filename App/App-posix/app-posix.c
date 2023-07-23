@@ -33,8 +33,10 @@
 *********************************************************************************************************
 */
 
-#include  <includes.h>
-#include  <posix-pthread.h>
+#include <includes.h>
+#include "pthread.h"
+#include "semaphore.h"
+
 
 /*
 *********************************************************************************************************
@@ -96,10 +98,10 @@ int  main (void)
 	rc1 |= msc_pthread_attr_setschedparam(&Task1_attr, &priority);
 
 	/* Create thread */
-	rc1 |= msc_pthread_create (&Task1ID,
-							   &Task1_attr,
-							   (void*)&App_Task1,
-							   (void*)thread1_message);
+	rc1 |= msc_pthread_create ( &Task1ID,
+								&Task1_attr,
+								(void*)&App_Task1,
+								(void*)thread1_message);
 
 	if(rc1 != MSC_PTHREAD_ERR_NONE)
 		PRINT("\nErro Pthreads init!!!!");
@@ -121,6 +123,15 @@ void App_Task1 (void *p_arg)
     Mem_Init();                                                 /* Initialize the Memory Management Module              */
     Math_Init();                                                /* Initialize the Mathematical Module                   */
     OS_CPU_SysTickInit();
+
+    /* Creates a semaphore */
+	OS_SEM* teste_sem = sem_open("MyWrapSemaphore", O_CREAT | O_EXCL, 0, 5);
+
+	/* Check for errors */
+	if(teste_sem != 0)
+		printf("\nAnd here it goes %s ... initialized with %d\n\n", teste_sem->NamePtr, teste_sem->Ctr);
+	else
+		printf("\nSemaphore was not created !!!\n\n");
 
     /* Cria a 2a Task/Thread */
     App_StartTask2();
@@ -152,10 +163,10 @@ static void App_StartTask2 (void)
 	rc2 |= msc_pthread_attr_setschedparam(&Task2_attr, &priority2);
 
 	/* Create thread */
-	rc2 |= msc_pthread_create(&Task2ID,
-							  &Task2_attr,
-							  (void*)&App_Task2,
-							  (void*)thread2_message);
+	rc2 |= msc_pthread_create(	&Task2ID,
+								&Task2_attr,
+								(void*)&App_Task2,
+								(void*)thread2_message);
 
 	if(rc2 != MSC_PTHREAD_ERR_NONE)
 	{

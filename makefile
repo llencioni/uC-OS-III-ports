@@ -16,7 +16,7 @@ ifeq ($(UNAME_S),Darwin)
     C_PATH=/Users/luizrlencioni/MestradoITA/msc_luiz-lencioni/code/Example-uC-OS-III
 endif
 
-# Source files list
+# Source files list (without POSIX interface for the Application SW)
 C_SOURCE=\
 $(C_PATH)/uCOS-III/os_cfg_app.c \
 $(C_PATH)/uCOS-III/os_core.c \
@@ -42,9 +42,37 @@ $(C_PATH)/uC-LIB/lib_str.c \
 $(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_c.c \
 $(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_core.c \
 $(C_PATH)/Ports/GCC-Ubuntu/os_app_hooks.c \
-$(C_PATH)/App/posix-pthread.c \
-$(C_PATH)/App/app-posix.c
-#$(C_PATH)/App/app.c  # Uncomment app.c and comment app-posix.c
+$(C_PATH)/App/app.c
+
+# Source files list with POSIX interface for the Application SW
+C_SOURCE_POSIX=\
+$(C_PATH)/uCOS-III/os_cfg_app.c \
+$(C_PATH)/uCOS-III/os_core.c \
+$(C_PATH)/uCOS-III/os_dbg.c \
+$(C_PATH)/uCOS-III/os_flag.c \
+$(C_PATH)/uCOS-III/os_mem.c \
+$(C_PATH)/uCOS-III/os_msg.c \
+$(C_PATH)/uCOS-III/os_mutex.c \
+$(C_PATH)/uCOS-III/os_prio.c \
+$(C_PATH)/uCOS-III/os_q.c \
+$(C_PATH)/uCOS-III/os_sem.c \
+$(C_PATH)/uCOS-III/os_stat.c \
+$(C_PATH)/uCOS-III/os_task.c \
+$(C_PATH)/uCOS-III/os_tick.c \
+$(C_PATH)/uCOS-III/os_time.c \
+$(C_PATH)/uCOS-III/os_tmr.c \
+$(C_PATH)/uCOS-III/os_var.c \
+$(C_PATH)/Ports/GCC-Ubuntu/os_cpu_c.c \
+$(C_PATH)/uC-LIB/lib_ascii.c \
+$(C_PATH)/uC-LIB/lib_math.c \
+$(C_PATH)/uC-LIB/lib_mem.c \
+$(C_PATH)/uC-LIB/lib_str.c \
+$(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_c.c \
+$(C_PATH)/Ports/GCC-Ubuntu/uC-CPU/cpu_core.c \
+$(C_PATH)/Ports/GCC-Ubuntu/os_app_hooks.c \
+$(C_PATH)/App/App-posix/pthread.c \
+$(C_PATH)/App/App-posix/semaphore.c \
+$(C_PATH)/App/App-posix/app-posix.c
 
 # Header files directories
 H_DIR=\
@@ -57,6 +85,7 @@ H_DIR=\
 
 # Object files (automatically generated from source files)
 OBJ=$(C_SOURCE:.c=.o)
+OBJ_POSIX=$(C_SOURCE_POSIX:.c=.o)
 
 # POSIX libraries (to run on Linux)
 LIBS=-lpthread
@@ -74,25 +103,33 @@ CC_FLAGS=\
 ###########################################################################
 
 # All Target
-all: POSIX_OS-III
+all: REGULAR-uC-API.exe
 
-# PC target
-POSIX_OS-III:	$(OBJ)
+REGULAR-uC-API.exe: $(OBJ)
 	@ echo 'Building binary using GCC: $@'
 	gcc $^ -o $@ $(LIBS)
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
 
+# Posix API for the Application SW
+posix: POSIX-uC-API.exe
+
+POSIX-uC-API.exe:	$(OBJ_POSIX)
+	@ echo 'Building binary using GCC: $@'
+	gcc $^ -o $@ $(LIBS)
+	@ echo 'Finished building binary: $@'
+	@ echo ' '	
+
 # Building files	
 %.o: %.c
 	@echo 'Building file: $<'
-	gcc $(H_DIR) -o $@ $< $(CC_FLAGS) $(LIBS)
+	gcc $(H_DIR) -o $@ $< $(CC_FLAGS)
 	@echo ' '
 
 # Other Targets
 clean:
 	find -type f -name '*.o' -delete
-	rm -rf *.exe *.o *.out POSIX_OS-III
+	rm -rf *.exe *.o *.out
 
 .PHONY: all clean
 

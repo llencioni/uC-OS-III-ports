@@ -10,7 +10,7 @@
 */
 
 #include "includes.h"
-#include "posix-pthread.h"
+#include "pthread.h"
 
 
 /* pthread_attr_init()
@@ -75,7 +75,7 @@ int msc_pthread_attr_setdetachstate (msc_pthread_attr_t * attr, int detachstate)
 }
 
 /*
- * msc_pthread_attr_getdetachstate()
+ * pthread_attr_getdetachstate()
  *
  * The detachstate attribute controls whether the thread is created in a
  * detached state.  * If the thread is created detached,  * then use of
@@ -99,7 +99,7 @@ int msc_pthread_attr_getdetachstate (const msc_pthread_attr_t * attr, int* detac
 }
 
 /*
- * msc_pthread_attr_setinheritsched()
+ * pthread_attr_setinheritsched()
  *
  * Sets the inheritsched attribute in the 'attr' argument
  *
@@ -147,7 +147,7 @@ int msc_pthread_attr_setinheritsched(msc_pthread_attr_t * attr, int inheritsched
 
 
 /*
- * msc_pthread_attr_getinheritsched()
+ * pthread_attr_getinheritsched()
  *
  * Gets the inheritsched attribute in the 'attr' argument (only detached is supported by us)
  *
@@ -169,7 +169,7 @@ int msc_pthread_attr_getinheritsched(const msc_pthread_attr_t * attr, int * inhe
 }
 
 /*
- * msc_pthread_attr_setscope()
+ * pthread_attr_setscope()
  *
  *
  */
@@ -204,7 +204,7 @@ int msc_pthread_attr_setscope(msc_pthread_attr_t *attr, int contentionscope)
 }
 
 /*
- * msc_pthread_attr_getscope()
+ * pthread_attr_getscope()
  *
  */
 int msc_pthread_attr_getscope(const msc_pthread_attr_t * attr, int * contentionscope)
@@ -253,7 +253,7 @@ int msc_pthread_attr_getstacksize(const msc_pthread_attr_t * attr, unsigned int 
 }
 
 /*
- * msc_pthread_attr_setschedpolicy()
+ * pthread_attr_setschedpolicy()
  *
  * Sets the 'scheduling policy attribute' of the thread attributes
  * object referred to by attr to the value specified in policy.
