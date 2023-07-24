@@ -34,7 +34,7 @@ $ ulimit -r unlimited
 
 $ ulimit -r
 
-7) Run: "$ ./POSIX_OS-III"
+7) Run: "./REGULAR-uC-API.exe" or "./POSIX-uC-API.exe"
 
 
 ------------------------
