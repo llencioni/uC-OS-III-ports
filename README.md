@@ -1,4 +1,4 @@
-# msc_luiz-lencioni/code/Example-uC-OS-III
+# uC/OS-III ports to LPC21xx and Ubuntu
 
 uC/OS-III (version V3.08.01), ports to:
 1) Linux Ubuntu (using POSIX)
