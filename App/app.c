@@ -1,30 +1,10 @@
 /*
-*********************************************************************************************************
-*                                              EXAMPLE CODE
-*
-*                          (c) Copyright 2003-2013; Micrium, Inc.; Weston, FL
-*
-*               All rights reserved.  Protected by international copyright laws.
-*               Knowledge of the source code may NOT be used to develop a similar product.
-*               Please help us continue to provide the Embedded community with the finest
-*               software available.  Your honesty is greatly appreciated.
-*********************************************************************************************************
-*/
-
-/*
-*********************************************************************************************************
-*
-*                                            EXAMPLE CODE
-*
-*                                         uC/OS-III on POSIX
-*
-*
-* Filename      : app.c
-* Version       : V1.00
-* Programmer(s) : DC
-*                 SB
-*********************************************************************************************************
-*/
+ * Application Software
+ * =====================
+ *
+ * Port to LPC2129 or Ubuntu (see "app_cfg.h")
+ *
+ */
 
 
 /*
