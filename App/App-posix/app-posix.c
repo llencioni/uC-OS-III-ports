@@ -50,6 +50,7 @@ static msc_pthread_t		Task1ID;
 static msc_pthread_attr_t	Task2_attr;
 static msc_pthread_t		Task2ID;
 
+static OS_SEM* 				semaphore1;
 
 /*
 *********************************************************************************************************
@@ -117,6 +118,8 @@ void App_Task1 (void *p_arg)
 {
     OS_ERR      os_err;
 
+    static unsigned char ReleaseSem = 0;
+
     (void)p_arg;                                                /* See Note #1                                          */
 
     CPU_Init();
@@ -124,12 +127,12 @@ void App_Task1 (void *p_arg)
     Math_Init();                                                /* Initialize the Mathematical Module                   */
     OS_CPU_SysTickInit();
 
-    /* Creates a semaphore */
-	OS_SEM* teste_sem = sem_open("MyWrapSemaphore", O_CREAT | O_EXCL, 0, 5);
+    /* Creates a semaphore with value = 0 (just one) */
+    semaphore1 = msc_sem_open("MyWrapSemaphore", O_CREAT | O_EXCL, 0, 0);
 
 	/* Check for errors */
-	if(teste_sem != 0)
-		printf("\nAnd here it goes %s ... initialized with %d\n\n", teste_sem->NamePtr, teste_sem->Ctr);
+	if(semaphore1 != 0)
+		printf("\n%s ... initialized with %d", semaphore1->NamePtr, semaphore1->Ctr);
 	else
 		printf("\nSemaphore was not created !!!\n\n");
 
@@ -143,6 +146,9 @@ void App_Task1 (void *p_arg)
 		OSTimeDlyHMSM(0u, 0u, 1u, 0u, OS_OPT_TIME_HMSM_STRICT, &os_err);
 		if(os_err != OS_ERR_NONE)
 			PRINT("\nErro 1o delay !!!");
+
+		if(++ReleaseSem >= 10)
+			msc_sem_post(semaphore1);
     }
 }
 
@@ -193,6 +199,9 @@ static  void  App_Task2 (void *p_arg)
 		#if(HW_TYPE == HW_VIRTUAL_LINUX)
 			PRINT("\nuCOS-III Task 2 ....");
 		#endif
+
+		/* Wait for semaphore be released */
+		msc_sem_wait(semaphore1);
     }
 }
 
